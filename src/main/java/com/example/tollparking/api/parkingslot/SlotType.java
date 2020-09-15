@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.parkingslot;
+package com.example.tollparking.api.parkingslot;
 
 /**
  * SlotType defines the discrite slots for each kind of vehicles with unique slot code, a description of slot and max

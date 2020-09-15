@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.price;
+package com.example.tollparking.api.price;
 
 import tollparking.api.parkingslot.ISlot;
 import tollparking.api.policy.PricingPolicy;

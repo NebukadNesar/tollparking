@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.parkingslot;
+package com.example.tollparking.api.parkingslot;
 
 /**
  * Slot defines each parkable area with type, slot park start time and status that describes the empty or full slot.

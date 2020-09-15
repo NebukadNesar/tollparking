@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.park;
+package com.example.tollparking.api.park;
 
 import java.io.Serializable;
 

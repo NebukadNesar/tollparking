@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.validation;
+package com.example.tollparking.api.validation;
 
 import static tollparking.api.validation.IValidationConstants.NULL_OBJ_MESSAGE;
 

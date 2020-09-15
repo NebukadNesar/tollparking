@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.policy;
+package com.example.tollparking.api.policy;
 
 /**
  * Pricing Policy defines the what pricing should be applied to parked cars in slots.

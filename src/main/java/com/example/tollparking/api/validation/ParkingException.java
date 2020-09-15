@@ -1,4 +1,4 @@
-package com.example.tollparking.api.api.validation;
+package com.example.tollparking.api.validation;
 
 public class ParkingException extends Throwable {
 
