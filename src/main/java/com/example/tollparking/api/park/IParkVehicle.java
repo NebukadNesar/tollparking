@@ -1,20 +1,17 @@
 package com.example.tollparking.api.park;
 
-import tollparking.api.parkingslot.SlotType;
-import tollparking.api.validation.ParkingException;
-import tollparking.api.validation.ValidationUtil;
-import tollparking.api.vehicle.Vehicle;
+import com.example.tollparking.api.requestresponse.Request;
+import com.example.tollparking.api.requestresponse.Response;
+import com.example.tollparking.api.statistic.StatisticsResponse;
+import com.example.tollparking.api.validation.ParkingException;
+
 
 public interface IParkVehicle {
 
+    Response park(Request request) throws ParkingException;
 
-    Response accept(Request request) throws ParkingException;
+    Response unPark(Request request) throws ParkingException;
 
+    StatisticsResponse stats();
 
-    default SlotType findSlotType(Vehicle vehicle) throws ParkingException {
-        ValidationUtil.validateNotNull(vehicle, "Vehicle in request cannot be null.");
-        SlotType slotType = null;
-
-        return slotType;
-    }
 }

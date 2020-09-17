@@ -1,20 +1,31 @@
-package com.example.tollparking.api.parkingslot;
+package com.example.tollparking.api.slot;
+
+import com.example.tollparking.api.constants.ParkingConstants;
 
 /**
  * SlotType defines the discrite slots for each kind of vehicles with unique slot code, a description of slot and max
- * available slots per vehicle type.
+ * available slots per type.
  */
 public enum SlotType {
-    SEDAN("SEDAN", "Sedan Cars", 50), EC20WATT("EC20", "Electrical Cars 20 WATT", 30), EC50WATT("EC50", "Electrical Cars 50 WATT", 40), NONE("", "", 0);
 
-    String code;
-    String slotName;
-    int    maxSlot;
+    SEDAN(ParkingConstants.SEDAN, "Sedan Cars", 50), EC20WATT(ParkingConstants.EC20WATT, "Electrical Cars 20 WATT", 30), EC50WATT(ParkingConstants.EC50WATT, "Electrical Cars 50 WATT", 40), NONE("", "", 0);
+
+    private String code;
+    private String slotName;
+    private int    maxSlot;
 
     SlotType(String code, String slotName, int maxSlot) {
         this.code     = code;
         this.slotName = slotName;
         this.maxSlot  = maxSlot;
+    }
+
+    public static SlotType get(String type) {
+        try {
+            return valueOf(type);
+        } catch (Exception e) {
+            return NONE;
+        }
     }
 
     public String getCode() {
@@ -40,4 +51,5 @@ public enum SlotType {
     public void setMaxSlot(int maxSlot) {
         this.maxSlot = maxSlot;
     }
+
 }

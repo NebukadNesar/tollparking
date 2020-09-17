@@ -1,6 +1,7 @@
-package com.example.tollparking.api.park;
+package com.example.tollparking.api.requestresponse;
 
-import tollparking.api.vehicle.Vehicle;
+
+import com.example.tollparking.api.vehicle.Vehicle;
 
 import java.io.Serializable;
 

@@ -1,12 +1,14 @@
-package com.example.tollparking.api.parkingslot;
+package com.example.tollparking.api.slot;
+
+import com.example.tollparking.api.vehicle.IVehicle;
 
 /**
  * Slot defines each parkable area with type, slot park start time and status that describes the empty or full slot.
  * When slot becomes empty start time reset.
  */
-public class Slot implements ISlot{
+public class Slot {
 
-    private enum SlotStatus {
+    public enum SlotStatus {
         EMPTY("E"), FULL("F");
 
         private String status;
@@ -32,17 +34,13 @@ public class Slot implements ISlot{
         }
     }
 
-    private SlotType slotType;
-    private long     startTime;
-    private String   status;
+    private SlotType   slotType;
+    private long       startTime;
+    private SlotStatus status;
+    private IVehicle   vehicleInSlot;
+    private int        slotNumber;
 
     public Slot() {
-    }
-
-    public Slot(SlotType slotType, long startTime, String status) {
-        this.slotType  = slotType;
-        this.startTime = startTime;
-        this.status    = status;
     }
 
     public SlotType getSlotType() {
@@ -61,11 +59,34 @@ public class Slot implements ISlot{
         this.startTime = startTime;
     }
 
-    public String getStatus() {
+    public SlotStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(SlotStatus status) {
         this.status = status;
     }
+
+    public IVehicle getVehicleInSlot() {
+        return vehicleInSlot;
+    }
+
+    public void setVehicleInSlot(IVehicle vehicleInSlot) {
+        this.vehicleInSlot = vehicleInSlot;
+    }
+
+    public int getSlotNumber() {
+        return slotNumber;
+    }
+
+    public void setSlotNumber(int slotNumber) {
+        this.slotNumber = slotNumber;
+    }
+
+    public void free() {
+        this.startTime     = 0;
+        this.vehicleInSlot = null;
+        this.status        = SlotStatus.EMPTY;
+    }
+
 }

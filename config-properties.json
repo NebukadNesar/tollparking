@@ -1,0 +1,38 @@
+{
+  "policy-properties": [
+    {
+      "name": "default",
+      "default-price": 2,
+      "hourly-price": 3.3
+    },
+    {
+      "name": "EC20",
+      "default-price": 3,
+      "hourly-price": 2
+    },
+    {
+      "name": "EC50",
+      "default-price": 3,
+      "hourly-price": 2.5
+    },
+    {
+      "name": "EXTRA",
+      "default-price": 1,
+      "hourly-price": 0
+    }
+  ],
+  "slot-policies": {
+    "sedan-policies": [
+      "default",
+      "EXTRA"
+    ],
+    "ec20w-policies": [
+      "default",
+      "EC20",
+      "EXTRA"
+    ],
+    "ec50w-policies": [
+      "EC50"
+    ]
+  }
+}

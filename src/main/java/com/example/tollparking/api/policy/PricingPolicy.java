@@ -21,7 +21,7 @@ public class PricingPolicy {
      */
     private String pricingPolicyName;
 
-    public PricingPolicy(double defaultPrice, double hourlyPrice, String pricingPolicyName) {
+    public PricingPolicy(String pricingPolicyName, double defaultPrice, double hourlyPrice) {
         this.defaultPrice      = defaultPrice;
         this.hourlyPrice       = hourlyPrice;
         this.pricingPolicyName = pricingPolicyName;

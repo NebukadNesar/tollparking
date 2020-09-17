@@ -1,6 +1,6 @@
 package com.example.tollparking.api.validation;
 
-import static tollparking.api.validation.IValidationConstants.NULL_OBJ_MESSAGE;
+import static com.example.tollparking.api.validation.IValidationConstants.NULL_OBJ_MESSAGE;
 
 public class ValidationUtil {
 
