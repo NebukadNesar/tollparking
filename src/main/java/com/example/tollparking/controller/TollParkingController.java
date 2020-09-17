@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class is spring based class and used for easy of use and run, gets the rest requests and direct it to service
+ * class @TollParkingService, another spring based class
+ */
 @RestController
 @RequestMapping("/tollparkingmanager")
 public class TollParkingController {

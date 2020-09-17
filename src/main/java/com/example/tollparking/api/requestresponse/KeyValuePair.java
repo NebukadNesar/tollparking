@@ -1,5 +1,9 @@
 package com.example.tollparking.api.requestresponse;
 
+/**
+ * <p>KeyValuePair class is a generic class which can be used in any response
+ * <p>ResponseObjects can be extended by adding new key-val pairs messages. e.g: @StatisticsResponse
+ */
 public class KeyValuePair {
 
     String key;

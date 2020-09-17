@@ -5,7 +5,7 @@ import java.util.List;
 import static com.example.tollparking.api.constants.ParkingConstants.*;
 
 /**
- * Construct Slots with given type and given number for each type
+ * Construct slots of given type and given number
  */
 public class StaticSlotFactory {
 

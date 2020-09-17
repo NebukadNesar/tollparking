@@ -15,6 +15,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * <p>PolicyConfigParser is constructing all the nessecary policies from json config file.
+ *
+ * <p>Policies defined in json array format
+ * <p>Policy-Slot Type match is also defined in a json array format
+ */
 public class PolicyConfigParser {
 
     private static final Map<String, PricingPolicy> pricingPolicySet  = new HashMap<>();
@@ -22,6 +28,12 @@ public class PolicyConfigParser {
     private static final Set<PricingPolicy>         ec20WSlotPolicies = new HashSet<>();
     private static final Set<PricingPolicy>         ec50WSlotPolicies = new HashSet<>();
 
+    /**
+     * Method does all the parsing and constructing of custom policies.
+     *
+     * @throws IOException
+     * @throws ParkingException
+     */
     public static void constructPolicyFromProperty() throws IOException, ParkingException {
 
         Reader      reader      = new FileReader("config-properties.json");

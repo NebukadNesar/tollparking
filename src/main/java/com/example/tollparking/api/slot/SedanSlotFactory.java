@@ -2,6 +2,9 @@ package com.example.tollparking.api.slot;
 
 import java.util.List;
 
+/**
+ * Sedan Slot factory class
+ */
 public class SedanSlotFactory extends AbstractSlotFactory {
 
     private int capacity;

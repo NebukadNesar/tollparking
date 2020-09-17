@@ -1,8 +1,17 @@
 package com.example.tollparking.api.policy;
 
 /**
- * Pricing Policy defines the what pricing should be applied to parked cars in slots.
+ * <p>Pricing Policy defines the what pricing should be applied to parked cars in slots.
  * A slot or car might be obligated to one or more pricing policy.
+ *
+ * <p>Policy is structured as its having two different price tag:
+ * <p>1-default one which is always added to the final total
+ * <p>2-hourly one which is multipled with waited hour number
+ * <p>(grand total is = default price + hourly price * waited hour)
+ *
+ *
+ * <p>A Slot on the other hand might have one or multiple policy,
+ * policy list and slot spesific policies defined in config-properties.json file.
  */
 public class PricingPolicy {
 

@@ -1,5 +1,8 @@
 package com.example.tollparking.api.requestresponse;
 
+/**
+ * ResponseCodes and ResponseCodeDesc are used in response object to define current situation of the api call
+ */
 public interface ResponseCodes {
 
     int    NONE_EMPTY_SLOT      = 33;

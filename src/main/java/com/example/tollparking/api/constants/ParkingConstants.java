@@ -1,5 +1,8 @@
 package com.example.tollparking.api.constants;
 
+/**
+ * <p>Globally defined parking constants
+ */
 public interface ParkingConstants {
 
     String SEDAN    = "SEDAN";

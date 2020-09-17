@@ -6,7 +6,7 @@ import com.example.tollparking.api.vehicle.IVehicle;
 import static com.example.tollparking.api.requestresponse.ResponseCodes.*;
 
 /**
- * Response Manager consructs the generic successful or unsuccssful response messages
+ * Response Manager constructs the generic successful or unsuccessful response messages using response codes and descriptions
  */
 public class ResponseManager {
 

@@ -3,11 +3,13 @@ package com.example.tollparking.api.slot;
 import com.example.tollparking.api.vehicle.IVehicle;
 
 /**
- * Slot defines each parkable area with type, slot park start time and status that describes the empty or full slot.
- * When slot becomes empty start time reset.
+ * Slot defines each park-able area of a type, an empty slot startTime is reset to 0.
  */
 public class Slot {
 
+    /**
+     * Enum defines the status of slot, EMPTY means it can accept new vehicles, FULL means it cannot accept new vehicles
+     */
     public enum SlotStatus {
         EMPTY("E"), FULL("F");
 

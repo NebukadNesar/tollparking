@@ -5,6 +5,11 @@ import com.example.tollparking.api.policy.PricingPolicy;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * <p>Response class is used to return different type of messages to caller,
+ * <p> E.g: a parking might not have free slot in this case api returns a noneEmptySlotResponse
+ *
+ */
 public class Response implements Serializable {
 
     enum ResponseType {

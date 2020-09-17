@@ -1,0 +1,12 @@
+com.example.tollparking
+com.example.tollparking.api.bill
+com.example.tollparking.api.constants
+com.example.tollparking.api.park
+com.example.tollparking.api.policy
+com.example.tollparking.api.requestresponse
+com.example.tollparking.api.slot
+com.example.tollparking.api.statistic
+com.example.tollparking.api.validation
+com.example.tollparking.api.vehicle
+com.example.tollparking.controller
+com.example.tollparking.service

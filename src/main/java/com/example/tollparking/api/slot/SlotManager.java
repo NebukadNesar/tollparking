@@ -5,7 +5,6 @@ import com.example.tollparking.api.requestresponse.Request;
 import com.example.tollparking.api.requestresponse.Response;
 import com.example.tollparking.api.requestresponse.ResponseManager;
 import com.example.tollparking.api.validation.ParkingException;
-import com.example.tollparking.api.validation.ValidationUtil;
 import com.example.tollparking.api.vehicle.IVehicle;
 
 import java.util.List;
@@ -14,6 +13,13 @@ import static com.example.tollparking.api.slot.Slot.SlotStatus.EMPTY;
 import static com.example.tollparking.api.slot.Slot.SlotStatus.FULL;
 import static com.example.tollparking.api.slot.StaticSlotFactory.*;
 
+/**
+ * SlotManager is the one doing all the management work,
+ * <p>1-finding an empty slot of that type
+ * <p>2-returning a proper  response message to caller
+ * <p>3-billing customer
+ * <p>4-freeing slot
+ */
 public class SlotManager {
 
     private static final SlotManager     instance        = new SlotManager();
@@ -24,6 +30,16 @@ public class SlotManager {
         return instance;
     }
 
+    /**
+     * From request object, vehicle is get and with vehicle type relative slot type is found and searches for free slot
+     * <p> if there is not slot in that type, a noEmptySlot messages returned.
+     *
+     * @param request
+     *
+     * @return
+     *
+     * @throws ParkingException
+     */
     public synchronized Response parkVehicle(Request request) throws ParkingException {
         IVehicle vehicle   = request.getVehicle();
         Slot     emptySlot = findEmptySlot(vehicle);
@@ -35,6 +51,13 @@ public class SlotManager {
         return responseManager.constructSuccessResponse(parkedSlot);
     }
 
+    /**
+     * Method unparks a requested vehicle type
+     *
+     * @param request
+     * @return
+     * @throws ParkingException
+     */
     public synchronized Response unParkVehicle(Request request) throws ParkingException {
         IVehicle vehicle  = request.getVehicle();
         SlotType slotType = SlotType.get(vehicle.getType());
@@ -49,6 +72,12 @@ public class SlotManager {
         return response;
     }
 
+    /**
+     * Method finds one vehicle in that slot type and removes it
+     *
+     * @param slotType
+     * @return
+     */
     private Response findVehicleAndRemove(SlotType slotType) {
         List<Slot> slotList = from(slotType);
         if (slotList == null) {
@@ -65,6 +94,13 @@ public class SlotManager {
         return responseManager.constructNoCarInSlotUnParkResponse();
     }
 
+    /**
+     * Method returns slot list of that type
+     *
+     * @param slotType
+     *
+     * @return
+     */
     private List<Slot> from(SlotType slotType) {
         if (SlotType.SEDAN.equals(slotType))
             return sedanSlot;
@@ -75,6 +111,14 @@ public class SlotManager {
         return null;
     }
 
+    /**
+     * Sets current slot status to FULL and assign that slot the the vehicle
+     *
+     * @param emptySlot
+     * @param vehicle
+     *
+     * @return
+     */
     private Slot park(Slot emptySlot, IVehicle vehicle) {
         emptySlot.setStartTime(System.currentTimeMillis());
         emptySlot.setVehicleInSlot(vehicle);
@@ -82,6 +126,13 @@ public class SlotManager {
         return emptySlot;
     }
 
+    /**
+     * Finds empty slot for vehicle type
+     *
+     * @param vehicle
+     *
+     * @return
+     */
     public Slot findEmptySlot(IVehicle vehicle) {
         SlotType slotType = SlotType.valueOf(vehicle.getType());
         if (SlotType.SEDAN.equals(slotType))

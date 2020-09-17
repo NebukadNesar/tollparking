@@ -10,13 +10,19 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Billing manager calculates the bill of the car when car leaves the parkign slot, also adds what pricing policies
- * applied to its bill
+ * <p>Billing manager calculates the total bill of the parked care in a slot when car leaves the slot, also applies the
+ * pricing policies of that type of slot to its bill total.
  */
 public class BillingManager {
 
     private PolicyManager policyManager = PolicyManager.getInstance();
 
+    /**
+     * Method is used to calculate the final price of the leaving car
+     *
+     * @param response
+     * @throws ParkingException
+     */
     public void billCustomer(Response response) throws ParkingException {
         ValidationUtil.validateNotNull(response, "billCustomer response is null");
 

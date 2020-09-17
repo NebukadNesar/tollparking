@@ -1,5 +1,8 @@
 package com.example.tollparking.api.vehicle;
 
+/**
+ * A simple vehicle definition varying with a type parameter
+ */
 public class Vehicle implements IVehicle{
 
     String type;
