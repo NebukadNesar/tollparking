@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -144,7 +145,7 @@ class TollparkingApplicationTests {
 	public void testNumberofSlotWithInitializedValuesOfSedan() throws ParkingException {
 		ParkingService     parkingService     = ParkingService.getInstance();
 		StatisticsResponse statisticsResponse = parkingService.stats();
-		List<Slot>         sedanSlot          = statisticsResponse.getEc20WattSlot();
+		List<Slot>         sedanSlot          = statisticsResponse.getSedanSlot();
 		final int          sedanSlotCount     = ParkingConstants.SEDAN_SLOT_COUNT;
 		Assertions.assertTrue(sedanSlotCount == sedanSlot.size(), "initialized sedan slot count does not match with the expected slot count.");
 	}
@@ -155,8 +156,8 @@ class TollparkingApplicationTests {
 		ParkingService     parkingService     = ParkingService.getInstance();
 		StatisticsResponse statisticsResponse = parkingService.stats();
 		List<Slot>         ec20Slots          = statisticsResponse.getEc20WattSlot();
-		final int          ec20WSlotCount     = ParkingConstants.SEDAN_SLOT_COUNT;
-		Assertions.assertTrue(ec20WSlotCount == ec20Slots.size(), "initialized ec20W slot count does not match with the expected slot count.");
+		final int          ec20WSlotCount     = ParkingConstants.EC20W_SLOT_COUNT;
+		Assertions.assertTrue(ec20WSlotCount == ec20Slots.size(), "ec20WSlotCount:" + ec20WSlotCount+" ec20Slots.size():" + ec20Slots.size()  + " initialized ec20W slot count does not match with the expected slot count.");
 	}
 
 	@Test
@@ -164,8 +165,8 @@ class TollparkingApplicationTests {
 	public void testNumberofSlotWithInitializedValuesOfEC50() throws ParkingException {
 		ParkingService     parkingService     = ParkingService.getInstance();
 		StatisticsResponse statisticsResponse = parkingService.stats();
-		List<Slot>         ec50Slots          = statisticsResponse.getEc20WattSlot();
-		final int          ec50WSlotCount     = ParkingConstants.SEDAN_SLOT_COUNT;
+		List<Slot>         ec50Slots          = statisticsResponse.getEc50WattSlot();
+		final int          ec50WSlotCount     = ParkingConstants.EC50W_SLOT_COUNT;
 		Assertions.assertTrue(ec50WSlotCount == ec50Slots.size(), "Slot size: " + ec50Slots.size() + " initialized ec50W slot count does not match with the expected slot count.");
 	}
 
@@ -202,13 +203,15 @@ class TollparkingApplicationTests {
 			}
 		}
 
+		parkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
 		for (int i = 0; i < numberOfFreeSedanSlots; i++) {
 			Response response = parkingService.park(parkRequest);
 			Assertions.assertTrue(response.getStatus() == PARK_SUCCESS_CODE, "there is a free slot for sedan but cannot park.");
 		}
 
+		exceedingParkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
 		Response exceededParkingResponse = parkingService.park(exceedingParkRequest);
-		Assertions.assertTrue(exceededParkingResponse.getStatus() == NONE_EMPTY_SLOT, "exceeding parking request for sedan did not return correct response code.");
+		Assertions.assertTrue(exceededParkingResponse.getStatus() == NONE_EMPTY_SLOT, "exceededParkingResponse.getStatus():" +exceededParkingResponse.getStatus()+" exceeding parking request for sedan did not return correct response code.");
 	}
 
 	@Test
@@ -228,11 +231,13 @@ class TollparkingApplicationTests {
 			}
 		}
 
+		parkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
 		for (int i = 0; i < numberOfFreeSlots; i++) {
 			Response response = parkingService.park(parkRequest);
 			Assertions.assertTrue(response.getStatus() == PARK_SUCCESS_CODE, "there is a free slot for ec20 but cannot park.");
 		}
 
+		exceedingParkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
 		Response exceededParkingResponse = parkingService.park(exceedingParkRequest);
 		Assertions.assertTrue(exceededParkingResponse.getStatus() == NONE_EMPTY_SLOT, "exceeding parking request for ec20 did not return correct response code.");
 	}
@@ -255,11 +260,13 @@ class TollparkingApplicationTests {
 			}
 		}
 
+		parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
 		for (int i = 0; i < numberOfFreeSlots; i++) {
 			Response response = parkingService.park(parkRequest);
 			Assertions.assertTrue(response.getStatus() == PARK_SUCCESS_CODE, "there is a free slot for ec20 but cannot park.");
 		}
 
+		exceedingParkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
 		Response exceededParkingResponse = parkingService.park(exceedingParkRequest);
 		Assertions.assertTrue(exceededParkingResponse.getStatus() == NONE_EMPTY_SLOT, "exceeding parking request for ec20 did not return correct response code.");
 	}
@@ -303,4 +310,76 @@ class TollparkingApplicationTests {
 		Response response = parkingService.park(parkRequest);
 		Assertions.assertTrue(response.getStatusDesc().contains("no such slot"), "correct error message is not returned for incorrect slot type request");
 	}
+
+	@Test
+	@Order(18)
+	public void test2SecondsPerformanceForSedanSlots() throws ParkingException {
+		/**
+		 * Test throughput  performance
+		 */
+		Executable sedan = new Executable() {
+			@Override
+			public void execute() throws Throwable {
+				final ParkingService parkingService = ParkingService.getInstance();
+				Request              parkRequest    = new Request();
+				parkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
+				for (int i = 0; i < 100; i++) {
+					Response parkingResponse = parkingService.park(parkRequest);
+					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+						parkingService.unPark(parkRequest);
+					}
+				}
+			}
+		};
+		Assertions.assertTimeout(Duration.ofSeconds(2), sedan, "For sedan; 100 operation did not finish in expected time limit. performance impact.");
+	}
+
+
+	@Test
+	@Order(19)
+	public void test2SecondsPerformanceForEC20WSlots() throws ParkingException {
+		/**
+		 * Test throughput  performance
+		 */
+		Executable ec20 = new Executable() {
+			@Override
+			public void execute() throws Throwable {
+				final ParkingService parkingService = ParkingService.getInstance();
+				Request              parkRequest    = new Request();
+				parkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
+				for (int i = 0; i < 100; i++) {
+					Response parkingResponse = parkingService.park(parkRequest);
+					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+						parkingService.unPark(parkRequest);
+					}
+				}
+			}
+		};
+		Assertions.assertTimeout(Duration.ofSeconds(2), ec20, "For ec20Watt; 100 operation did not finish in expected time limit. performance impact.");
+	}
+
+
+	@Test
+	@Order(20)
+	public void test2SecondsPerformanceForEC50WSlots() throws ParkingException {
+		/**
+		 * Test throughput  performance
+		 */
+		Executable ec50 = new Executable() {
+			@Override
+			public void execute() throws Throwable {
+				final ParkingService parkingService = ParkingService.getInstance();
+				Request              parkRequest    = new Request();
+				parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
+				for (int i = 0; i < 100; i++) {
+					Response parkingResponse = parkingService.park(parkRequest);
+					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+						parkingService.unPark(parkRequest);
+					}
+				}
+			}
+		};
+		Assertions.assertTimeout(Duration.ofSeconds(2), ec50, "For ec50Watt; 100 operation did not finish in expected time limit. performance impact.");
+	}
+
 }

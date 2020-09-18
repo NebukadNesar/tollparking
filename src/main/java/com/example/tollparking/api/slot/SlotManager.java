@@ -45,7 +45,7 @@ public class SlotManager {
         Slot     emptySlot = findEmptySlot(vehicle);
 
         if (emptySlot == null) {
-            return responseManager.constructNoSuchSlotAvailableResponse(vehicle.getType());
+            return responseManager.constructNoneEmptySlotResponse(vehicle);
         }
         Slot parkedSlot = park(emptySlot, vehicle);
         return responseManager.constructSuccessResponse(parkedSlot);
