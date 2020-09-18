@@ -45,7 +45,7 @@ public class SlotManager {
         Slot     emptySlot = findEmptySlot(vehicle);
 
         if (emptySlot == null) {
-            return responseManager.constructNoneEmptySlotResponse(vehicle);
+            return responseManager.constructNoSuchSlotAvailableResponse(vehicle.getType());
         }
         Slot parkedSlot = park(emptySlot, vehicle);
         return responseManager.constructSuccessResponse(parkedSlot);
@@ -134,7 +134,7 @@ public class SlotManager {
      * @return
      */
     public Slot findEmptySlot(IVehicle vehicle) {
-        SlotType slotType = SlotType.valueOf(vehicle.getType());
+        SlotType slotType = SlotType.get(vehicle.getType());
         if (SlotType.SEDAN.equals(slotType))
             return sedanSlot();
         if (SlotType.EC20WATT.equals(slotType))

@@ -16,14 +16,46 @@ public class Response implements Serializable {
         FAIL, SUCCESS
     }
 
-    private int                status;
-    private int                atNumber;
-    private String             statusDesc;
-    private long               parkStartAsMillis;
-    private double             price;
-    private String             appliedPolicies;
+    /**
+     * status CODE when returning a response to user
+     */
+    private int status;
+
+    /**
+     * atNumber defines vehicle parked position in slots
+     */
+    private int atNumber;
+
+    /**
+     * status desc provides a detailed message to user along with status code
+     */
+    private String statusDesc;
+
+    /**
+     * at what time the park has started
+     */
+    private long parkStartAsMillis;
+
+    /**
+     * price of total parking, calculate with policies
+     */
+    private double price;
+
+    /**
+     * what type of policies are applied, this attribute defines that policies set name
+     */
+    private String appliedPolicies;
+
+    /**
+     * applied policies set to the final total
+     */
     private Set<PricingPolicy> pricingPolicySet;
-    private ResponseType       responseType;
+
+    /**
+     * response might be successful or unsuccessful depending on the excpetions, errors or missing slot type, none empty
+     * slots etc.. this attribute defines success or fail of response
+     */
+    private ResponseType responseType;
 
     public Response() {
     }

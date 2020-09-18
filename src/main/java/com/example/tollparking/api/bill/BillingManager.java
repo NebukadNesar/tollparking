@@ -44,13 +44,12 @@ public class BillingManager {
      *
      * @param bill
      * @param policy
-     * @param hour
+     * @param hourSpent
      *
      * @return
      */
-    private double applyPolicyPrices(double bill, PricingPolicy policy, long hour) {
-        double newPrice = bill + policy.getDefaultPrice() + (policy.getHourlyPrice() * hour);
-        System.out.println(" bill  +\"-\"+ policy.getDefaultPrice() + (policy.getHourlyPrice() * hour = " +  bill  +"-"+ policy.getDefaultPrice()  +"-"+ (policy.getHourlyPrice()*hour)+"");
+    private double applyPolicyPrices(double bill, PricingPolicy policy, long hourSpent) {
+        double newPrice = bill + policy.getDefaultPrice() + (policy.getHourlyPrice() * hourSpent);
         return newPrice;
     }
 

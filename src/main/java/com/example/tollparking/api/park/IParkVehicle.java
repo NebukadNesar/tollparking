@@ -24,7 +24,7 @@ public interface IParkVehicle {
     Response park(Request request) throws ParkingException;
 
     /**
-     * <p><strong>unpark</strong> method accepts a request object, of type vehicle requested it tries to find FULL slot
+     * <p><strong>unPark</strong> method accepts a request object, of type vehicle requested it tries to find FULL slot
      * and frees slot and bill customer with slot spesific policies which are defined in config-properties.json file and
      * returns a proper response with these information.
      *
@@ -38,7 +38,7 @@ public interface IParkVehicle {
 
 
     /**
-     * Method retues and statistical data of parking area, which slots are full which one is empty etc..
+     * Method returns and statistical data of parking area, which slots are full which one is empty etc..
      *
      * @return
      */

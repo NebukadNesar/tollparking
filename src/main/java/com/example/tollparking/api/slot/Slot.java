@@ -36,11 +36,30 @@ public class Slot {
         }
     }
 
-    private SlotType   slotType;
-    private long       startTime;
+    /**
+     * slotType defines what type of slot is this
+     */
+    private SlotType slotType;
+
+    /**
+     * startTime at what time slot started being used by a vehicle
+     */
+    private long startTime;
+
+    /**
+     * parameter defines EMPTY or FULL status of slot, when car parked in a slot, status set to FULL, otherwise EMPTY
+     */
     private SlotStatus status;
-    private IVehicle   vehicleInSlot;
-    private int        slotNumber;
+
+    /**
+     * sets which car is in slot
+     */
+    private IVehicle vehicleInSlot;
+
+    /**
+     * slotNumber defines position of slot in slot list, also shows user what number his/her car is parked
+     */
+    private int slotNumber;
 
     public Slot() {
     }
