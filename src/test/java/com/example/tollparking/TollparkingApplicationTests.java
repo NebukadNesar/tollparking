@@ -157,7 +157,7 @@ class TollparkingApplicationTests {
 		StatisticsResponse statisticsResponse = parkingService.stats();
 		List<Slot>         ec20Slots          = statisticsResponse.getEc20WattSlot();
 		final int          ec20WSlotCount     = ParkingConstants.EC20W_SLOT_COUNT;
-		Assertions.assertTrue(ec20WSlotCount == ec20Slots.size(), "ec20WSlotCount:" + ec20WSlotCount+" ec20Slots.size():" + ec20Slots.size()  + " initialized ec20W slot count does not match with the expected slot count.");
+		Assertions.assertTrue(ec20WSlotCount == ec20Slots.size(), "initialized ec20W slot count does not match with the expected slot count.");
 	}
 
 	@Test
@@ -167,7 +167,7 @@ class TollparkingApplicationTests {
 		StatisticsResponse statisticsResponse = parkingService.stats();
 		List<Slot>         ec50Slots          = statisticsResponse.getEc50WattSlot();
 		final int          ec50WSlotCount     = ParkingConstants.EC50W_SLOT_COUNT;
-		Assertions.assertTrue(ec50WSlotCount == ec50Slots.size(), "Slot size: " + ec50Slots.size() + " initialized ec50W slot count does not match with the expected slot count.");
+		Assertions.assertTrue(ec50WSlotCount == ec50Slots.size(), "initialized ec50W slot count does not match with the expected slot count.");
 	}
 
 	@Test
@@ -252,7 +252,7 @@ class TollparkingApplicationTests {
 		int            numberOfFreeSlots    = 0;
 
 		StatisticsResponse statisticsResponse = parkingService.stats();
-		List<Slot>         ec50Slots          = statisticsResponse.getEc20WattSlot();
+		List<Slot>         ec50Slots          = statisticsResponse.getEc50WattSlot();
 
 		for (Slot slot : ec50Slots) {
 			if (Slot.SlotStatus.EMPTY.equals(slot.getStatus())) {
@@ -263,7 +263,7 @@ class TollparkingApplicationTests {
 		parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
 		for (int i = 0; i < numberOfFreeSlots; i++) {
 			Response response = parkingService.park(parkRequest);
-			Assertions.assertTrue(response.getStatus() == PARK_SUCCESS_CODE, "there is a free slot for ec20 but cannot park.");
+			Assertions.assertTrue(response.getStatus() == PARK_SUCCESS_CODE, "-" + response.getStatus() + "-numberOfFreeSlots:" + numberOfFreeSlots + "there is a free slot for ec50 but cannot park.");
 		}
 
 		exceedingParkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
@@ -274,28 +274,21 @@ class TollparkingApplicationTests {
 	@Test
 	@Order(15)
 	public void testExceptionalResponseCaseForNullRequest() {
-		ParkingException exception = Assertions.assertThrows(ParkingException.class, new Executable() {
-			@Override
-			public void execute() throws Throwable {
-				final ParkingService parkingService = ParkingService.getInstance();
-
-				parkingService.park(null);
-			}
+		ParkingException exception = Assertions.assertThrows(ParkingException.class, () -> {
+			final ParkingService parkingService = ParkingService.getInstance();
+			parkingService.park(null);
 		});
 
-		Assertions.assertTrue(exception.getMessage().contains("Request is null"), "for null reqest exception correct exception message is not returned.");
+		Assertions.assertTrue(exception.getMessage().contains("Request is null"), "for null request exception correct exception message is not returned.");
 	}
 
 	@Test
 	@Order(16)
 	public void testExceptionalResponseCaseForEmptySlotType() {
-		ParkingException exception = Assertions.assertThrows(ParkingException.class, new Executable() {
-			@Override
-			public void execute() throws Throwable {
-				final ParkingService parkingService = ParkingService.getInstance();
-				Request              parkRequest    = new Request();
-				parkingService.park(parkRequest);
-			}
+		ParkingException exception = Assertions.assertThrows(ParkingException.class, () -> {
+			final ParkingService parkingService = ParkingService.getInstance();
+			Request              parkRequest    = new Request();
+			parkingService.park(parkRequest);
 		});
 
 		Assertions.assertTrue(exception.getMessage().contains("Vehicle is null"), "correct exception message is not returned.");
@@ -306,7 +299,7 @@ class TollparkingApplicationTests {
 	public void testExceptionalResponseCaseForIncorrectSlotType() throws ParkingException {
 		final ParkingService parkingService = ParkingService.getInstance();
 		Request              parkRequest    = new Request();
-		parkRequest.setVehicle(new Vehicle("Volvo"));
+		parkRequest.setVehicle(new Vehicle("Flying"));
 		Response response = parkingService.park(parkRequest);
 		Assertions.assertTrue(response.getStatusDesc().contains("no such slot"), "correct error message is not returned for incorrect slot type request");
 	}
@@ -317,21 +310,18 @@ class TollparkingApplicationTests {
 		/**
 		 * Test throughput  performance
 		 */
-		Executable sedan = new Executable() {
-			@Override
-			public void execute() throws Throwable {
-				final ParkingService parkingService = ParkingService.getInstance();
-				Request              parkRequest    = new Request();
-				parkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
-				for (int i = 0; i < 100; i++) {
-					Response parkingResponse = parkingService.park(parkRequest);
-					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-						parkingService.unPark(parkRequest);
-					}
+		Executable sedan = () -> {
+			final ParkingService parkingService = ParkingService.getInstance();
+			Request              parkRequest    = new Request();
+			parkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
+			for (int i = 0; i < 100; i++) {
+				Response parkingResponse = parkingService.park(parkRequest);
+				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+					parkingService.unPark(parkRequest);
 				}
 			}
 		};
-		Assertions.assertTimeout(Duration.ofSeconds(2), sedan, "For sedan; 100 operation did not finish in expected time limit. performance impact.");
+		Assertions.assertTimeout(Duration.ofSeconds(1), sedan, "For sedan; 100 operations did not finish in expected time limit. performance impact.");
 	}
 
 
@@ -341,21 +331,18 @@ class TollparkingApplicationTests {
 		/**
 		 * Test throughput  performance
 		 */
-		Executable ec20 = new Executable() {
-			@Override
-			public void execute() throws Throwable {
-				final ParkingService parkingService = ParkingService.getInstance();
-				Request              parkRequest    = new Request();
-				parkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
-				for (int i = 0; i < 100; i++) {
-					Response parkingResponse = parkingService.park(parkRequest);
-					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-						parkingService.unPark(parkRequest);
-					}
+		Executable ec20 = () -> {
+			final ParkingService parkingService = ParkingService.getInstance();
+			Request              parkRequest    = new Request();
+			parkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
+			for (int i = 0; i < 100; i++) {
+				Response parkingResponse = parkingService.park(parkRequest);
+				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+					parkingService.unPark(parkRequest);
 				}
 			}
 		};
-		Assertions.assertTimeout(Duration.ofSeconds(2), ec20, "For ec20Watt; 100 operation did not finish in expected time limit. performance impact.");
+		Assertions.assertTimeout(Duration.ofSeconds(1), ec20, "For ec20Watt; 100 operations did not finish in expected time limit. performance impact.");
 	}
 
 
@@ -365,21 +352,18 @@ class TollparkingApplicationTests {
 		/**
 		 * Test throughput  performance
 		 */
-		Executable ec50 = new Executable() {
-			@Override
-			public void execute() throws Throwable {
-				final ParkingService parkingService = ParkingService.getInstance();
-				Request              parkRequest    = new Request();
-				parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
-				for (int i = 0; i < 100; i++) {
-					Response parkingResponse = parkingService.park(parkRequest);
-					if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-						parkingService.unPark(parkRequest);
-					}
+		Executable ec50 = () -> {
+			final ParkingService parkingService = ParkingService.getInstance();
+			Request              parkRequest    = new Request();
+			parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
+			for (int i = 0; i < 100; i++) {
+				Response parkingResponse = parkingService.park(parkRequest);
+				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
+					parkingService.unPark(parkRequest);
 				}
 			}
 		};
-		Assertions.assertTimeout(Duration.ofSeconds(2), ec50, "For ec50Watt; 100 operation did not finish in expected time limit. performance impact.");
+		Assertions.assertTimeout(Duration.ofSeconds(1), ec50, "For ec50Watt; 100 operations did not finish in expected time limit. performance impact.");
 	}
 
 }

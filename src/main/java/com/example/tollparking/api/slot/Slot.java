@@ -110,4 +110,9 @@ public class Slot {
         this.status        = SlotStatus.EMPTY;
     }
 
+
+    @Override
+    public String toString() {
+        return "Slot{" + "slotType=" + slotType + ", startTime=" + startTime + ", status=" + status + ", vehicleInSlot=" + vehicleInSlot + ", slotNumber=" + slotNumber + '}';
+    }
 }

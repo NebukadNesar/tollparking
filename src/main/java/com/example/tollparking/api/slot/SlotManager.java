@@ -41,8 +41,14 @@ public class SlotManager {
      * @throws ParkingException
      */
     public synchronized Response parkVehicle(Request request) throws ParkingException {
-        IVehicle vehicle   = request.getVehicle();
-        Slot     emptySlot = findEmptySlot(vehicle);
+        IVehicle vehicle = request.getVehicle();
+        SlotType t       = SlotType.get(vehicle.getType());
+
+        if (SlotType.NONE.equals(t)) {
+            return responseManager.constructNoSuchSlotTypeResponse(t.getCode());
+        }
+
+        Slot emptySlot = findEmptySlot(t);
 
         if (emptySlot == null) {
             return responseManager.constructNoneEmptySlotResponse(vehicle);
@@ -127,19 +133,18 @@ public class SlotManager {
     }
 
     /**
-     * Finds empty slot for vehicle type
+     * Finds empty slot for slotType
      *
-     * @param vehicle
+     * @param slotType
      *
      * @return
      */
-    public Slot findEmptySlot(IVehicle vehicle) {
-        SlotType slotType = SlotType.get(vehicle.getType());
+    public Slot findEmptySlot(SlotType slotType) {
         if (SlotType.SEDAN.equals(slotType))
             return sedanSlot();
         if (SlotType.EC20WATT.equals(slotType))
             return ec20WSlot();
-        if (SlotType.EC20WATT.equals(slotType))
+        if (SlotType.EC50WATT.equals(slotType))
             return ec50WSlot();
         return null;
     }

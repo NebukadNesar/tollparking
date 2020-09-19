@@ -31,7 +31,7 @@ public class StaticSlotFactory {
     }
 
     private static List constructEC50WATTSlots() {
-        return new EC20WattSlotFactory(EC50W_SLOT_COUNT).construct();
+        return new EC50WattSlotFactory(EC50W_SLOT_COUNT).construct();
     }
 
 }

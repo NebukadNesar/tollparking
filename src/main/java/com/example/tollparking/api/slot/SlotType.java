@@ -21,11 +21,13 @@ public enum SlotType {
     }
 
     public static SlotType get(String type) {
-        try {
-            return valueOf(type);
-        } catch (Exception e) {
-            return NONE;
-        }
+        if (SEDAN.code.equals(type))
+            return SEDAN;
+        if (EC20WATT.code.equals(type))
+            return EC20WATT;
+        if (EC50WATT.code.equals(type))
+            return EC50WATT;
+        return NONE;
     }
 
     public String getCode() {

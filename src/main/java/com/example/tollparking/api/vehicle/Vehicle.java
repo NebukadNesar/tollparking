@@ -8,7 +8,6 @@ public class Vehicle implements IVehicle{
     String type;
 
     public Vehicle() {
-        super();
     }
 
     public Vehicle(String type) {
