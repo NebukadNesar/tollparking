@@ -6,11 +6,14 @@ import com.example.tollparking.api.vehicle.Vehicle;
 import java.io.Serializable;
 
 /**
- * Class is used to make api call message body for both Parking and Unparking
+ * Request class is used to make api call, and contains message body for both Parking and Unparking
  *
  */
 public class Request implements Serializable {
 
+    /**
+     * vehicle for request
+     */
     private Vehicle vehicle;
 
     public Request() {

@@ -29,25 +29,25 @@ public class StatisticController {
         int occupiedSedanSlotCount   = getOccupiedCount(sedanSlot);
         int unOccupiedSedanSlotCount = getUnOccupiedCount(sedanSlot, occupiedSedanSlotCount);
 
-        int occupiedEC20SlotCount   = getOccupiedCount(sedanSlot);
-        int unOccupiedEC20SlotCount = getUnOccupiedCount(sedanSlot, occupiedEC20SlotCount);
+        int occupiedEC20SlotCount   = getOccupiedCount(ec20WattSlot);
+        int unOccupiedEC20SlotCount = getUnOccupiedCount(ec20WattSlot, occupiedEC20SlotCount);
 
-        int occupiedEC50SlotCount   = getOccupiedCount(sedanSlot);
-        int unOccupiedEC50SlotCount = getUnOccupiedCount(sedanSlot, occupiedEC50SlotCount);
+        int occupiedEC50SlotCount   = getOccupiedCount(ec50WattSlot);
+        int unOccupiedEC50SlotCount = getUnOccupiedCount(ec50WattSlot, occupiedEC50SlotCount);
 
-        int sedanPercentage = (occupiedSedanSlotCount / sedanSlot.size());
-        int ec20wPercentage = (occupiedSedanSlotCount / ec20WattSlot.size());
-        int ec50wPercentage = (occupiedSedanSlotCount / ec50WattSlot.size());
+        int sedanPercentage = (int) (occupiedSedanSlotCount / (1.0 * sedanSlot.size()) * 100);
+        int ec20wPercentage = (int) (occupiedEC20SlotCount / (1.0 * ec20WattSlot.size()) * 100);
+        int ec50wPercentage = (int) (occupiedEC50SlotCount / (1.0 * ec50WattSlot.size()) * 100);
 
-        response.addParam(new KeyValuePair("occupied sedan slot count",   String.valueOf(occupiedSedanSlotCount)));
+        response.addParam(new KeyValuePair("occupied sedan slot count", String.valueOf(occupiedSedanSlotCount)));
         response.addParam(new KeyValuePair("unoccupied sedan slot count", String.valueOf(unOccupiedSedanSlotCount)));
-        response.addParam(new KeyValuePair("sedan usage percentege % ",   String.valueOf(sedanPercentage)));
+        response.addParam(new KeyValuePair("sedan usage percentege % ", String.valueOf(sedanPercentage)));
 
-        response.addParam(new KeyValuePair("occupied ec20kw slot count",   String.valueOf(occupiedEC20SlotCount)));
+        response.addParam(new KeyValuePair("occupied ec20kw slot count", String.valueOf(occupiedEC20SlotCount)));
         response.addParam(new KeyValuePair("unoccupied ec20kw slot count", String.valueOf(unOccupiedEC20SlotCount)));
-        response.addParam(new KeyValuePair("ec20kw usage percentege % ",   String.valueOf(ec20wPercentage)));
+        response.addParam(new KeyValuePair("ec20kw usage percentege % ", String.valueOf(ec20wPercentage)));
 
-        response.addParam(new KeyValuePair("occupied ec50kw slot count",   String.valueOf(occupiedEC50SlotCount)));
+        response.addParam(new KeyValuePair("occupied ec50kw slot count", String.valueOf(occupiedEC50SlotCount)));
         response.addParam(new KeyValuePair("unoccupied ec50kw slot count", String.valueOf(unOccupiedEC50SlotCount)));
         response.addParam(new KeyValuePair("ec50kw usage percentege % ",   String.valueOf(ec50wPercentage)));
 

@@ -26,6 +26,9 @@ public class ParkingService implements IParkVehicle {
     /**
      * Parks a requested vehicle if there are slots free.
      *
+     * <p>Validates if park request is null,
+     * <p>Validates if park request contains vehicle
+     *
      * @param request
      *
      * @return
@@ -41,6 +44,9 @@ public class ParkingService implements IParkVehicle {
     /**
      * Unparks a vehicle from the requested slot list
      *
+     * <p>Validates if unPark request is null,
+     * <p>Validates if unPark request contains vehicle
+     *
      * @param request
      *
      * @return
@@ -55,6 +61,8 @@ public class ParkingService implements IParkVehicle {
 
     /**
      * Returns the all the slot types information, EMPTY, FULL, ParkStartTime etc..
+     *
+     * <p> this method called in test methods to see if there are empty slots for each slot type
      *
      * @return
      */
