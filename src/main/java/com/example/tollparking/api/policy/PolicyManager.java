@@ -4,6 +4,7 @@ import com.example.tollparking.api.constants.ParkingConstants;
 import com.example.tollparking.api.validation.ParkingException;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class PolicyManager {
 
         try {
             constructPolicies();
-        } catch (IOException | ParkingException e) {
+        } catch (IOException | ParkingException | URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -44,7 +45,7 @@ public class PolicyManager {
      * @throws IOException
      * @throws ParkingException
      */
-    private static void constructPolicies() throws IOException, ParkingException {
+    private static void constructPolicies() throws IOException, ParkingException, URISyntaxException {
         PolicyConfigParser policyConfigParser = new PolicyConfigParser();
         policyConfigParser.constructPolicyFromProperty();
         sedanSlotPolicies = policyConfigParser.getSedanSlotPolices();
