@@ -7,11 +7,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -36,7 +34,7 @@ public class PolicyConfigParser {
      * @throws IOException
      * @throws ParkingException
      */
-    public static void constructPolicyFromProperty() throws IOException, ParkingException, URISyntaxException {
+    public static void constructPolicyFromProperty() throws IOException, ParkingException {
 
         Reader      reader      = new FileReader("config-properties.json");
         JsonElement jsonElement = JsonParser.parseReader(reader);

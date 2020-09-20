@@ -33,7 +33,7 @@ public class PolicyManager {
 
         try {
             constructPolicies();
-        } catch (IOException | ParkingException | URISyntaxException e) {
+        } catch (IOException | ParkingException e) {
             e.printStackTrace();
         }
 
@@ -45,7 +45,7 @@ public class PolicyManager {
      * @throws IOException
      * @throws ParkingException
      */
-    private static void constructPolicies() throws IOException, ParkingException, URISyntaxException {
+    private static void constructPolicies() throws IOException, ParkingException {
         PolicyConfigParser policyConfigParser = new PolicyConfigParser();
         policyConfigParser.constructPolicyFromProperty();
         sedanSlotPolicies = policyConfigParser.getSedanSlotPolices();
