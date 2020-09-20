@@ -21,9 +21,9 @@ hit: localhost:8080 on a browser to see its working
 
 For test run:
 	mvn test
-There are 24 test cases each for different scnario, app doc read, performance, faulty requests, exceptions etc..
+There are 24 test cases each for different scenario, app doc read, performance, faulty requests, exceptions etc..
 
-Application request a json file called config-properties.json in app directory as in URL: https://github.com/NebukadNesar/tollparking/blob/master/config-properties.json
+Application reqires a json file called config-properties.json in app directory as in URL: https://github.com/NebukadNesar/tollparking/blob/master/config-properties.json
 
 In this file policies and slot preferences can be changed. Api requires this file when starting.
 
