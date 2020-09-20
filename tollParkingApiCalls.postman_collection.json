@@ -1,0 +1,62 @@
+{
+	"variables": [],
+	"info": {
+		"name": "tollParkingApiCalls",
+		"_postman_id": "418c8b4b-c179-b888-3cdf-fe7d7317b683",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/tollparkingmanager/unpark",
+			"request": {
+				"url": "http://localhost:8080/tollparkingmanager/unpark",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle\": {\n        \"type\": \"EC50\"\n    }\n}"
+				},
+				"description": "unpark request"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/tollparkingmanager/park",
+			"request": {
+				"url": "http://localhost:8080/tollparkingmanager/park",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"vehicle\": {\n        \"type\": \"EC50\"\n    }\n}"
+				},
+				"description": "toll parking park request"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/tollparkingmanager/statistics",
+			"request": {
+				"url": "http://localhost:8080/tollparkingmanager/statistics",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "toll parking stats request"
+			},
+			"response": []
+		}
+	]
+}
