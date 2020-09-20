@@ -64,4 +64,9 @@ public class StatisticsResponse {
     public void addParam(KeyValuePair keyValuePair) {
         stats.add(keyValuePair);
     }
+
+    @Override
+    public String toString() {
+        return "StatisticsResponse{" + "statisticName='" + statisticName + '\'' + ", sedanSlot=" + sedanSlot + ", ec20WattSlot=" + ec20WattSlot + ", ec50WattSlot=" + ec50WattSlot + ", stats=" + stats + '}';
+    }
 }

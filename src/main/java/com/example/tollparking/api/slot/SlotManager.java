@@ -112,7 +112,7 @@ public class SlotManager {
             return sedanSlot;
         if (SlotType.EC20WATT.equals(slotType))
             return ec20WattSlot;
-        if (SlotType.EC20WATT.equals(slotType))
+        if (SlotType.EC50WATT.equals(slotType))
             return ec50WattSlot;
         return null;
     }

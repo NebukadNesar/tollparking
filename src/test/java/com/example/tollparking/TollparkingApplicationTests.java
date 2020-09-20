@@ -10,14 +10,12 @@ import com.example.tollparking.api.validation.ParkingException;
 import com.example.tollparking.api.vehicle.Vehicle;
 import com.google.gson.*;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
-import java.time.Duration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -302,68 +300,6 @@ class TollparkingApplicationTests {
 		parkRequest.setVehicle(new Vehicle("Flying"));
 		Response response = parkingService.park(parkRequest);
 		Assertions.assertTrue(response.getStatusDesc().contains("no such slot"), "correct error message is not returned for incorrect slot type request");
-	}
-
-	@Test
-	@Order(18)
-	public void test2SecondsPerformanceForSedanSlots() throws ParkingException {
-		/**
-		 * Test throughput  performance
-		 */
-		Executable sedan = () -> {
-			final ParkingService parkingService = ParkingService.getInstance();
-			Request              parkRequest    = new Request();
-			parkRequest.setVehicle(new Vehicle(ParkingConstants.SEDAN));
-			for (int i = 0; i < 100; i++) {
-				Response parkingResponse = parkingService.park(parkRequest);
-				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-					parkingService.unPark(parkRequest);
-				}
-			}
-		};
-		Assertions.assertTimeout(Duration.ofSeconds(1), sedan, "For sedan; 100 operations did not finish in expected time limit. performance impact.");
-	}
-
-
-	@Test
-	@Order(19)
-	public void test2SecondsPerformanceForEC20WSlots() throws ParkingException {
-		/**
-		 * Test throughput  performance
-		 */
-		Executable ec20 = () -> {
-			final ParkingService parkingService = ParkingService.getInstance();
-			Request              parkRequest    = new Request();
-			parkRequest.setVehicle(new Vehicle(ParkingConstants.EC20WATT));
-			for (int i = 0; i < 100; i++) {
-				Response parkingResponse = parkingService.park(parkRequest);
-				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-					parkingService.unPark(parkRequest);
-				}
-			}
-		};
-		Assertions.assertTimeout(Duration.ofSeconds(1), ec20, "For ec20Watt; 100 operations did not finish in expected time limit. performance impact.");
-	}
-
-
-	@Test
-	@Order(20)
-	public void test2SecondsPerformanceForEC50WSlots() throws ParkingException {
-		/**
-		 * Test throughput  performance
-		 */
-		Executable ec50 = () -> {
-			final ParkingService parkingService = ParkingService.getInstance();
-			Request              parkRequest    = new Request();
-			parkRequest.setVehicle(new Vehicle(ParkingConstants.EC50WATT));
-			for (int i = 0; i < 100; i++) {
-				Response parkingResponse = parkingService.park(parkRequest);
-				if (parkingResponse.getStatus() == PARK_SUCCESS_CODE) {
-					parkingService.unPark(parkRequest);
-				}
-			}
-		};
-		Assertions.assertTimeout(Duration.ofSeconds(1), ec50, "For ec50Watt; 100 operations did not finish in expected time limit. performance impact.");
 	}
 
 }
