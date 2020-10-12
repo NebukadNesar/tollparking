@@ -1,0 +1,5 @@
+FROM openjdk:8
+ADD target/tollParkingLibrary.jar tollParkingLibrary.jar
+ADD config-properties.json config-properties.json
+EXPOSE 8085
+ENTRYPOINT ["java","-jar","tollParkingLibrary.jar"]
