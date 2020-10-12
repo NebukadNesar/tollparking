@@ -41,8 +41,7 @@ Java file can be used by importing into another project or just by using it as a
 Api has two public POST methods for "park"  and "unPark" and a GET method "statistics" that provides statistical information about the parking.
 
 -----------------
-------park-------
------------------	
+<h3>park</h3>	
 park: POST http://<ip>:8080/tollparkingmanager/park
 request body: raw, type: application/json
 sample json : 
@@ -68,8 +67,7 @@ sample response:
 }
 ```
 -----------------
------unpark------
------------------			  
+<h3>unPark</h3>			  
 unpark: POST http://<ip>:8080/tollparkingmanager/unpark
 request body: raw
 type: application/json
@@ -105,8 +103,7 @@ sample response:
 returns policies applied and price total.
 
 -----------------
----statistics----
------------------
+<h3>statistics</h3>
 
 statistics: GET http://<ip>:8080/tollparkingmanager/statistics
 not request
@@ -116,3 +113,15 @@ returns: StatisticsResponse object
 Already tested and used api call samples in POSTMAN added to the project git location url: https://github.com/NebukadNesar/tollparking/blob/master/tollParkingApiCalls.postman_collection.json
 These samples can be imported and run.
 
+-----
+
+<h3>DockerFile</h3>
+```
+FROM openjdk:8
+ADD target/tollParkingLibrary.jar tollParkingLibrary.jar
+ADD config-properties.json config-properties.json
+EXPOSE 8085
+ENTRYPOINT ["java","-jar","tollParkingLibrary.jar"]
+```
+* docker build -f DockerFile -t docker-spring-boot .
+* docker run -p 8085:8085 docker-spring-boot
